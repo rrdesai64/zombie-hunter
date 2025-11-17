@@ -1,5 +1,10 @@
 # 🧟 Zombie Hunter
 
+# 🧟 Zombie Hunter
+
+[![Tests](https://github.com/rrdesai64/zombie-hunter/actions/workflows/test.yml/badge.svg)](https://github.com/rrdesai64/zombie-hunter/actions/workflows/test.yml)
+
+**Find and eliminate zombie CronJobs in your Kubernetes clusters.**
 **Find and eliminate zombie CronJobs in your Kubernetes clusters.**
 
 Zombie CronJobs are scheduled jobs that haven't run successfully in weeks or months, yet they're still deployed and costing you money. Zombie Hunter finds them automatically.
