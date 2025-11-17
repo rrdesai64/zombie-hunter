@@ -3,7 +3,7 @@
 # 🧟 Zombie Hunter
 
 [![Tests](https://github.com/rrdesai64/zombie-hunter/actions/workflows/test.yml/badge.svg)](https://github.com/rrdesai64/zombie-hunter/actions/workflows/test.yml)
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/rrdesai64/zombie-hunter)](https://goreportcard.com/report/github.com/rrdesai64/zombie-hunter)
 **Find and eliminate zombie CronJobs in your Kubernetes clusters.**
 **Find and eliminate zombie CronJobs in your Kubernetes clusters.**
 
