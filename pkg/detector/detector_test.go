@@ -112,7 +112,7 @@ func TestCalculateConfidence(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			result := CalculateConfidence(tt.daysSince, tt.totalJobs, tt.failedJobs, tt.suspended)
 			if result != tt.expected {
-				t.Errorf("calculateConfidence(%d, %d, %d, %v) = %d; want %d",
+				t.Errorf("CalculateConfidence(%d, %d, %d, %v) = %d; want %d",
 					tt.daysSince, tt.totalJobs, tt.failedJobs, tt.suspended, result, tt.expected)
 			}
 		})
@@ -365,9 +365,9 @@ func TestDaysSinceSuccess(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := DaysSinceSuccess(tt.jobs)
+			result := DaysSinceSuccess(tt.jobs) // ✅ UPPERCASE!
 			if result != tt.expected {
-				t.Errorf("daysSinceSuccess() = %d; want %d", result, tt.expected)
+				t.Errorf("DaysSinceSuccess() = %d; want %d", result, tt.expected)
 			}
 		})
 	}

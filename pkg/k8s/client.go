@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
+	batchv1 "k8s.io/api/batch/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -109,6 +110,43 @@ func (c *Client) GetJobsForCronJob(ctx context.Context, namespace, cronJobName s
 	}
 
 	return result, nil
+}
+
+// GetRawCronJobs returns raw Kubernetes CronJob objects
+func (c *Client) GetRawCronJobs(ctx context.Context, namespace string) (*batchv1.CronJobList, error) {
+	var ns string
+	if namespace == "" {
+		ns = metav1.NamespaceAll
+	} else {
+		ns = namespace
+	}
+
+	return c.clientset.BatchV1().CronJobs(ns).List(ctx, metav1.ListOptions{})
+}
+
+// GetRawJobsForCronJob returns raw Kubernetes Job objects for a CronJob
+func (c *Client) GetRawJobsForCronJob(ctx context.Context, namespace, cronJobName string) (*batchv1.JobList, error) {
+	// Get all jobs in namespace
+	allJobs, err := c.clientset.BatchV1().Jobs(namespace).List(ctx, metav1.ListOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	// Filter jobs that belong to this CronJob
+	filteredJobs := &batchv1.JobList{
+		Items: []batchv1.Job{},
+	}
+
+	for _, job := range allJobs.Items {
+		for _, owner := range job.OwnerReferences {
+			if owner.Kind == "CronJob" && owner.Name == cronJobName {
+				filteredJobs.Items = append(filteredJobs.Items, job)
+				break
+			}
+		}
+	}
+
+	return filteredJobs, nil
 }
 
 type CronJobInfo struct {

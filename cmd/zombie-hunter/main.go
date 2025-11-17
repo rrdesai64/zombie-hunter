@@ -46,13 +46,31 @@ func run(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("failed to create Kubernetes client: %w", err)
 	}
 
-	// Create detector
-	det := detector.NewDetector(client)
+	// Get CronJobs
+	cronJobsList, err := client.GetRawCronJobs(ctx, namespace)
+	if err != nil {
+		return fmt.Errorf("failed to list CronJobs: %w", err)
+	}
 
 	// Find zombies
-	zombies, err := det.FindZombies(ctx, namespace, days)
-	if err != nil {
-		return fmt.Errorf("failed to detect zombies: %w", err)
+	var zombies []detector.Zombie
+
+	for _, cronJob := range cronJobsList.Items {
+		// Get Jobs for this CronJob
+		jobsList, err := client.GetRawJobsForCronJob(ctx, cronJob.Namespace, cronJob.Name)
+
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Warning: failed to get jobs for %s/%s: %v\n",
+				cronJob.Namespace, cronJob.Name, err)
+			continue
+		}
+
+		// Analyze this CronJob
+		zombie := detector.AnalyzeCronJob(&cronJob, jobsList.Items, days)
+
+		if zombie.IsZombie {
+			zombies = append(zombies, zombie)
+		}
 	}
 
 	// Format and output

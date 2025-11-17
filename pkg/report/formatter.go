@@ -19,7 +19,7 @@ func NewFormatter(format string) *Formatter {
 	return &Formatter{format: format}
 }
 
-func (f *Formatter) Output(zombies []detector.ZombieCandidate, thresholdDays int) error {
+func (f *Formatter) Output(zombies []detector.Zombie, thresholdDays int) error {
 	switch f.format {
 	case "json":
 		return f.outputJSON(zombies)
@@ -30,7 +30,7 @@ func (f *Formatter) Output(zombies []detector.ZombieCandidate, thresholdDays int
 	}
 }
 
-func (f *Formatter) outputTable(zombies []detector.ZombieCandidate, thresholdDays int) error {
+func (f *Formatter) outputTable(zombies []detector.Zombie, thresholdDays int) error {
 	fmt.Printf("\n🧟 ZOMBIE HUNTER REPORT\n")
 	fmt.Printf("Generated: %s\n", time.Now().Format("2006-01-02 15:04:05"))
 	fmt.Printf("Threshold: %d days\n\n", thresholdDays)
@@ -102,7 +102,7 @@ func (f *Formatter) outputTable(zombies []detector.ZombieCandidate, thresholdDay
 	return nil
 }
 
-func (f *Formatter) outputCSV(zombies []detector.ZombieCandidate) error {
+func (f *Formatter) outputCSV(zombies []detector.Zombie) error {
 	w := csv.NewWriter(os.Stdout)
 	defer w.Flush()
 
@@ -124,7 +124,7 @@ func (f *Formatter) outputCSV(zombies []detector.ZombieCandidate) error {
 	return nil
 }
 
-func (f *Formatter) outputJSON(zombies []detector.ZombieCandidate) error {
+func (f *Formatter) outputJSON(zombies []detector.Zombie) error {
 	output := map[string]interface{}{
 		"generated_at":  time.Now().Format(time.RFC3339),
 		"total_zombies": len(zombies),
