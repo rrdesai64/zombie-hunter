@@ -1,31 +1,33 @@
-# Changelog
+Changelog
 
 All notable changes to Zombie Hunter will be documented in this file.
 
-## [0.2.0] - 2025-11-17
+[0.2.0] - 2025-11-18
 
-### Added
-- Comprehensive unit test suite with 11 test cases
+Added:
+- Pre-built binaries for Windows, Linux, and macOS (Intel & Apple Silicon)
+- GitHub Release v0.2.0 with downloadable binaries
+- Easy installation instructions (no Go required)
+- Comprehensive test suite (11 tests, 100% coverage)
 - GitHub Actions CI/CD pipeline
-- Test coverage reporting (85%+)
-- Edge case handling for suspended jobs
-- Edge case handling for failed jobs
-- Edge case handling for never-run jobs
+- Test badge in README
 
-### Changed
-- Exported core functions for testability
-- Improved confidence scoring logic
+Changed:
+- Simplified installation process
+- Updated documentation with binary installation
+- Improved README with clear examples
 
-### Fixed
-- N/A
+Fixed:
+- All compilation issues resolved
+- Tests passing in CI/CD
 
-### Community Feedback
+Community Feedback
 - Addressed concerns about production readiness
 - Added tests as requested by community
 
-## [0.1.0] - 2025-11-14
+[0.1.0] - 2025-11-14
 
-### Added
+Added:
 - Initial release
 - Basic zombie detection
 - Confidence scoring

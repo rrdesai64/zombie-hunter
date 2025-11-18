@@ -28,3 +28,7 @@ Thumbs.db
 
 # Dependencies
 vendor/
+# Release binaries
+releases/
+*.exe
+zombie-hunter-*
